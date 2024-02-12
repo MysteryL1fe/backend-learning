@@ -6,4 +6,20 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>link-parser</artifactId>
+  <properties>
+  	<maven-compiler-plugin.version>3.12.1</maven-compiler-plugin.version>
+  </properties>
+  <build>
+  	<plugins>
+		<plugin>
+		  <groupId>org.apache.maven.plugins</groupId>
+		  <artifactId>maven-compiler-plugin</artifactId>
+		  <version>${maven-compiler-plugin.version}</version>
+		  <configuration>
+		      <release>19</release>
+		      <parameters>true</parameters>
+		  </configuration>
+		</plugin>
+  	</plugins>
+  </build>
 </project>
