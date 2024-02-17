@@ -15,7 +15,6 @@ import ru.khanin.dmitrii.DTO.*;
 @RestController
 public class ScrapperController {
 	@PostMapping("/tg-chat/{id}")
-	@ExceptionHandler
 	public ResponseEntity<?> registerChat(@PathVariable int id) {
 		return ResponseEntity.ok().build();
 	}

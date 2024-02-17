@@ -1,3 +1,5 @@
 package ru.khanin.dmitrii.DTO.StackOverflow;
 
-public record ShallowUserResponse(int accountId, String displayName, String link) {}
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public record ShallowUserResponse(@JsonProperty("account_id") int accountId, @JsonProperty("display_name") String displayName, String link) {}
