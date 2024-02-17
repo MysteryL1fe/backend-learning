@@ -1,3 +1,5 @@
 package ru.khanin.dmitrii.DTO.GitHub;
 
-public record OwnerResponse(String login, int id, String nodeId, String htmlUrl, String type) {}
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public record OwnerResponse(String login, int id, @JsonProperty("node_id") String nodeId, @JsonProperty("html_url") String htmlUrl, String type) {}
