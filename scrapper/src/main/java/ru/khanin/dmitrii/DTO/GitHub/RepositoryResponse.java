@@ -2,7 +2,9 @@ package ru.khanin.dmitrii.DTO.GitHub;
 
 import java.time.OffsetDateTime;
 
-public record RepositoryResponse(int id, String nodeId, String name, String fullName, String htmlUrl,
-		String description, boolean fork, int forks, int stargazersCount, int watchers,
-		int size, OffsetDateTime createdAt, OffsetDateTime pushedAt, OffsetDateTime updatedAt,
-		OwnerResponse owner) {}
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public record RepositoryResponse(int id, @JsonProperty("node_id") String nodeId, String name, @JsonProperty("full_name") String fullName,
+		@JsonProperty("html_url") String htmlUrl, String description, int forks, int watchers, int size,
+		@JsonProperty("created_at") OffsetDateTime createdAt, @JsonProperty("pushed_at") OffsetDateTime pushedAt,
+		@JsonProperty("updated_at") OffsetDateTime updatedAt, OwnerResponse owner) {}
