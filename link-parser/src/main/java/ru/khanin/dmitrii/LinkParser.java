@@ -8,6 +8,6 @@ public class LinkParser {
 		String link = "";
 		String[] splittedLink = link.split("/");
 		if (splittedLink.length > 2)
-		System.out.println(parser.parseLink(link, link.split("/")[2]));
+		System.out.println(parser.parseLink(link));
 	}
 }

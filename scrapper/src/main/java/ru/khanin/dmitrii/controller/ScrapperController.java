@@ -15,28 +15,28 @@ import ru.khanin.dmitrii.DTO.*;
 @RestController
 public class ScrapperController {
 	@PostMapping("/tg-chat/{id}")
-	public ResponseEntity<?> registerChat(@PathVariable int id) {
+	public ResponseEntity<?> registerChat(@PathVariable long id) {
 		return ResponseEntity.ok().build();
 	}
 	
 	@DeleteMapping("/tg-chat/{id}")
-	public ResponseEntity<?> deleteChat(@PathVariable int id) {
+	public ResponseEntity<?> deleteChat(@PathVariable long id) {
 		return ResponseEntity.ok().build();
 	}
 	
 	@GetMapping("/links")
-	public ResponseEntity<ListLinksResponse> getLinks(@RequestHeader("Tg-Chat-Id") int chatId) {
+	public ResponseEntity<ListLinksResponse> getLinks(@RequestHeader("Tg-Chat-Id") long chatId) {
 		return ResponseEntity.ok().build();
 	}
 	
 	@PostMapping("/links")
-	public ResponseEntity<LinkResponse> addLink(@RequestHeader("Tg-Chat-Id") int chatId,
+	public ResponseEntity<LinkResponse> addLink(@RequestHeader("Tg-Chat-Id") long chatId,
 			@RequestBody AddLinkRequest link) {
 		return ResponseEntity.ok().build();
 	}
 	
 	@DeleteMapping("/links")
-	public ResponseEntity<LinkResponse> deleteLink(@RequestHeader("Tg-Chat-Id") int chatId,
+	public ResponseEntity<LinkResponse> deleteLink(@RequestHeader("Tg-Chat-Id") long chatId,
 			@RequestBody RemoveLinkRequest link) {
 		return ResponseEntity.ok().build();
 	}
