@@ -1,0 +1,5 @@
+CREATE TABLE chat (
+	id INT PRIMARY KEY,
+	chat_id INT NOT NULL,
+	username VARCHAR(255) NOT NULL
+);

@@ -1,4 +1,4 @@
-package ru.khanin.dmitrii.DTO;
+package ru.khanin.dmitrii.DTO.scrapper;
 
 import java.net.URI;
 
