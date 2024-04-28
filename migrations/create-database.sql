@@ -1,1 +1,0 @@
-CREATE DATABASE link_chat;
