@@ -20,6 +20,7 @@ import ru.khanin.dmitrii.DTO.AddLinkRequest;
 import ru.khanin.dmitrii.DTO.LinkResponse;
 import ru.khanin.dmitrii.DTO.ListLinksResponse;
 import ru.khanin.dmitrii.DTO.RemoveLinkRequest;
+import ru.khanin.dmitrii.DTO.entity.Chat;
 import ru.khanin.dmitrii.DTO.entity.Link;
 import ru.khanin.dmitrii.service.ChatService;
 import ru.khanin.dmitrii.service.LinkChatService;
@@ -46,7 +47,9 @@ public class ScrapperController {
 	
 	@GetMapping("/links")
 	public ResponseEntity<ListLinksResponse> getLinks(@RequestHeader("Tg-Chat-Id") long chatId) {
-		Collection<Link> links = linkService.findAllByChatId(chatId);
+		Chat foundChat = chatService.findByChatId(chatId);
+		if (foundChat == null) return ResponseEntity.badRequest().build();
+		Collection<Link> links = linkService.findAllByChatId(foundChat.getId());
 		List<LinkResponse> linkResponses = new ArrayList<>();
 		links.forEach((e) -> {
 			try {
@@ -63,9 +66,11 @@ public class ScrapperController {
 	@PostMapping("/links")
 	public ResponseEntity<LinkResponse> addLink(@RequestHeader("Tg-Chat-Id") long chatId,
 			@RequestBody AddLinkRequest link) {
+		Chat foundChat = chatService.findByChatId(chatId);
+		if (foundChat == null) return ResponseEntity.badRequest().build();
 		Link savedLink = linkService.add(link.link());
 		long linkId = savedLink.getId();
-		linkChatService.add(linkId, chatId);
+		linkChatService.add(linkId, foundChat.getId());
 		LinkResponse result = null;
 		try {
 			result = new LinkResponse(savedLink.getId(), new URI(savedLink.getLink()));
@@ -79,10 +84,11 @@ public class ScrapperController {
 	@DeleteMapping("/links")
 	public ResponseEntity<LinkResponse> deleteLink(@RequestHeader("Tg-Chat-Id") long chatId,
 			@RequestBody RemoveLinkRequest link) {
+		Chat foundChat = chatService.findByChatId(chatId);
+		if (foundChat == null) return ResponseEntity.badRequest().build();
 		Link foundLink = linkService.findByLink(link.link());
 		if (foundLink == null) return ResponseEntity.badRequest().build();
-		long linkId = foundLink.getId();
-		linkChatService.remove(linkId, chatId);
+		linkChatService.remove(foundLink.getId(), foundChat.getId());
 		LinkResponse result = null;
 		try {
 			result = new LinkResponse(foundLink.getId(), new URI(foundLink.getLink()));

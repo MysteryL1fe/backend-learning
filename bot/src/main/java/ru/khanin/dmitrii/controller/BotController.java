@@ -10,7 +10,7 @@ import ru.khanin.dmitrii.DTO.*;
 @RestController
 public class BotController {
 	@PostMapping("/updates")
-	public ResponseEntity<?> postUpdates(@RequestBody LinkUpdate update) {
+	public ResponseEntity<?> postUpdates(@RequestBody LinkUpdateRequest update) {
 		return ResponseEntity.ok().build();
 	}
 }

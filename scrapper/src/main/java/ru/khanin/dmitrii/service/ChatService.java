@@ -6,4 +6,5 @@ public interface ChatService {
 	Chat register(long chatId);
 	Chat register(long chatId, String username);
 	Chat unregister(long chatId);
+	Chat findByChatId(long chatId);
 }

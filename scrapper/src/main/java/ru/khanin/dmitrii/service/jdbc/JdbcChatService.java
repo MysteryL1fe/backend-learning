@@ -18,6 +18,7 @@ public class JdbcChatService implements ChatService {
 	public Chat register(long chatId) {
 		Chat chat = new Chat();
 		chat.setChatId(chatId);
+		chat.setUsername("user");
 		return chatRepo.add(chat);
 	}
 
@@ -33,6 +34,11 @@ public class JdbcChatService implements ChatService {
 	public Chat unregister(long chatId) {
 		linkChatRepo.removeAllLinks(chatId);
 		return chatRepo.remove(chatId).orElse(null);
+	}
+	
+	@Override
+	public Chat findByChatId(long chatId) {
+		return chatRepo.findByChatId(chatId).orElse(null);
 	}
 
 }

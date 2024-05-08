@@ -18,7 +18,7 @@ public class BotApplication {
 		ApplicationConfig config = ctx.getBean(ApplicationConfig.class);
 		System.out.println(config);
 		
-		TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
-		botsApi.registerBot(new TelegramBot(config.botName(), config.botToken()));
+		//TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
+		//botsApi.registerBot(new TelegramBot(config.botName(), config.botToken()));
 	}
 }
