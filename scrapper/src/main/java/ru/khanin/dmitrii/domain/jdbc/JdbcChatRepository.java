@@ -30,6 +30,19 @@ public class JdbcChatRepository implements ChatRepository {
 	}
 	
 	@Override
+	public Optional<Chat> findById(long id) {
+		return Optional.ofNullable(
+				DataAccessUtils.singleResult(
+						jdbcTemplate.query(
+								"SELECT * FROM chat WHERE id=:id",
+								Map.of("id", id),
+								rowMapper
+						)
+				)
+		);
+	}
+	
+	@Override
 	public Optional<Chat> findByChatId(long chatId) {
 		return Optional.ofNullable(
 				DataAccessUtils.singleResult(

@@ -37,6 +37,11 @@ public class JdbcChatService implements ChatService {
 	}
 	
 	@Override
+	public Chat findById(long id) {
+		return chatRepo.findById(id).orElse(null);
+	}
+	
+	@Override
 	public Chat findByChatId(long chatId) {
 		return chatRepo.findByChatId(chatId).orElse(null);
 	}

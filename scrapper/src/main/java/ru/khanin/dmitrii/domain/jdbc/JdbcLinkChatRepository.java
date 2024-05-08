@@ -40,6 +40,11 @@ public class JdbcLinkChatRepository implements LinkChatRepository {
 	}
 	
 	@Override
+	public Iterable<LinkChat> findAllByLinkId(long linkId) {
+		return jdbcTemplate.query("SELECT * FROM link_chat WHERE link_id=:linkId", Map.of("linkId", linkId), rowMapper);
+	}
+	
+	@Override
 	public Optional<LinkChat> remove(LinkChat linkChat) {
 		return Optional.ofNullable(
 				DataAccessUtils.singleResult(

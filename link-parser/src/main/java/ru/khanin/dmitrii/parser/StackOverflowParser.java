@@ -1,21 +1,27 @@
 package ru.khanin.dmitrii.parser;
 
-public record StackOverflowParser(ParserHandler next) implements ParserHandler {
+import ru.khanin.dmitrii.content.StackOverflowContent;
 
-	public Object parseLink(String link) {
+public class StackOverflowParser extends ParserHandler {
+	
+	@Override
+	protected boolean isSupported(String link) {
 		String[] splittedLink = link.split("/");
-		if (splittedLink.length < 3 || !(splittedLink[0].equals("http:") || splittedLink[0].equals("https:"))
-				|| !splittedLink[1].isEmpty())
-			return null;
+		
+		if (splittedLink.length < 5
+				&& !splittedLink[0].equals("http:") && !splittedLink[0].equals("https:")
+				&& !splittedLink[1].isEmpty()
+				&& !splittedLink[2].equals("stackoverflow.com")
+				&& !splittedLink[3].equals("questions")
+		) return false;
+		
+		return true;
+	}
 
-		String site = splittedLink[2];
-
-		if (site.equals("stackoverflow.com")) {
-			if (splittedLink.length > 4 && splittedLink[3].equals("questions"))
-				return Long.parseLong(splittedLink[4]);
-		} else if (next != null) {
-			return next.parseLink(link);
-		}
-		return null;
+	@Override
+	protected Object parseLink(String link) {
+		String[] splittedLink = link.split("/");
+		
+		return new StackOverflowContent(splittedLink[4]);
 	}
 };

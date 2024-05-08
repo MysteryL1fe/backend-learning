@@ -1,7 +1,7 @@
 package ru.khanin.dmitrii.test.parser;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import ru.khanin.dmitrii.content.StackOverflowContent;
 import ru.khanin.dmitrii.parser.ParserHandler;
 import ru.khanin.dmitrii.parser.StackOverflowParser;
 
@@ -25,14 +26,15 @@ public class StackOverflowParserTest {
 	
 	@BeforeEach
 	void setUp() {
-		stackOverflowParser = new StackOverflowParser(nextParser);
+		stackOverflowParser = new StackOverflowParser();
+		stackOverflowParser.setNextParser(nextParser);
 	}
 	
 	@Test
 	void parseLinkNotLinkShouldReturnNull() {
 		String link = "123";
 		
-		Object result = stackOverflowParser.parseLink(link);
+		Object result = stackOverflowParser.parse(link);
 		
 		assertAll(
 				"Assert not link",
@@ -44,7 +46,7 @@ public class StackOverflowParserTest {
 	void parseLinkNotValidLinkWithoutProtocolShouldReturnNull() {
 		String link = "//123/456";
 		
-		Object result = stackOverflowParser.parseLink(link);
+		Object result = stackOverflowParser.parse(link);
 		
 		assertAll(
 				"Assert not valid link without protocol",
@@ -56,7 +58,7 @@ public class StackOverflowParserTest {
 	void parseLinkNotValidLinkWithSymbolsAfterSlashShouldReturnNull() {
 		String link = "http:/123/456";
 		
-		Object result = stackOverflowParser.parseLink(link);
+		Object result = stackOverflowParser.parse(link);
 		
 		assertAll(
 				"Assert not valid link with symbols after slash",
@@ -68,9 +70,9 @@ public class StackOverflowParserTest {
 	void parseLinkNotStackOverflowLinkShouldCallNextParser() {
 		String link = "http://abc";
 		String expectedResult = "12345";
-		Mockito.when(nextParser.parseLink(Mockito.any())).thenReturn(expectedResult);
+		Mockito.when(nextParser.parse(Mockito.any())).thenReturn(expectedResult);
 		
-		Object result = stackOverflowParser.parseLink(link);
+		Object result = stackOverflowParser.parse(link);
 		
 		assertAll(
 				"Assert not stack overflow link with next parser",
@@ -82,10 +84,10 @@ public class StackOverflowParserTest {
 	
 	@Test
 	void parseLinkNotStackOverflowLinkShouldReturnNull() {
-		stackOverflowParser = new StackOverflowParser(null);
+		stackOverflowParser = new StackOverflowParser();
 		String link = "http://abc";
 		
-		Object result = stackOverflowParser.parseLink(link);
+		Object result = stackOverflowParser.parse(link);
 		
 		assertAll(
 				"Assert not stack overflow link without next parser",
@@ -97,7 +99,7 @@ public class StackOverflowParserTest {
 	void parseLinkNotQuestionLinkShouldReturnNull() {
 		String link = "http://stackoverflow.com/abc/123";
 		
-		Object result = stackOverflowParser.parseLink(link);
+		Object result = stackOverflowParser.parse(link);
 		
 		assertAll(
 				"Assert stack overflow not question link",
@@ -109,7 +111,7 @@ public class StackOverflowParserTest {
 	void parseLinkTooShortQuestionLinkShouldReturnNull() {
 		String link = "http://stackoverflow.com/question";
 		
-		Object result = stackOverflowParser.parseLink(link);
+		Object result = stackOverflowParser.parse(link);
 		
 		assertAll(
 				"Assert stack overflow too short question link",
@@ -120,30 +122,30 @@ public class StackOverflowParserTest {
 	@Test
 	void parseLinkValidHttpLinkShouldReturnLong() {
 		String link = "http://stackoverflow.com/questions/123";
-		long expectedResult = 123;
+		StackOverflowContent expectedResult = new StackOverflowContent("123");
 		
-		Object result = stackOverflowParser.parseLink(link);
+		Object result = stackOverflowParser.parse(link);
 		
 		assertAll(
 				"Assert valid http stack overflow ling",
 				() -> assertThat(result).isNotNull(),
-				() -> assertThat(result).isInstanceOf(Long.class),
-				() -> assertThat((Long) result).isEqualTo(expectedResult)
+				() -> assertThat(result).isInstanceOf(StackOverflowContent.class),
+				() -> assertThat((StackOverflowContent) result).isEqualTo(expectedResult)
 		);
 	}
 	
 	@Test
 	void parseLinkValidHttpsLinkShouldReturnLong() {
 		String link = "https://stackoverflow.com/questions/123";
-		long expectedResult = 123;
+		StackOverflowContent expectedResult = new StackOverflowContent("123");
 		
-		Object result = stackOverflowParser.parseLink(link);
+		Object result = stackOverflowParser.parse(link);
 		
 		assertAll(
 				"Assert valid https stack overflow ling",
 				() -> assertThat(result).isNotNull(),
-				() -> assertThat(result).isInstanceOf(Long.class),
-				() -> assertThat((Long) result).isEqualTo(expectedResult)
+				() -> assertThat(result).isInstanceOf(StackOverflowContent.class),
+				() -> assertThat((StackOverflowContent) result).isEqualTo(expectedResult)
 		);
 	}
 }

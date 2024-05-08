@@ -1,21 +1,25 @@
 package ru.khanin.dmitrii.parser;
 
-public record GitHubParser(ParserHandler next) implements ParserHandler {
+import ru.khanin.dmitrii.content.GitHubContent;
 
-	public Object parseLink(String link) {
+public class GitHubParser extends ParserHandler {
+	@Override
+	protected boolean isSupported(String link) {
 		String[] splittedLink = link.split("/");
-		if (splittedLink.length < 3 || !(splittedLink[0].equals("http:") || splittedLink[0].equals("https:"))
-				|| !splittedLink[1].isEmpty())
-			return null;
+		
+		if (splittedLink.length < 5
+				&& !splittedLink[0].equals("http:") && !splittedLink[0].equals("https:")
+				&& !splittedLink[1].isEmpty()
+				&& !splittedLink[2].equals("github.com")
+		) return false;
+		
+		return true;
+	}
 
-		String site = splittedLink[2];
+	@Override
+	protected Object parseLink(String link) {
+		String[] splittedLink = link.split("/");
 
-		if (site.equals("github.com")) {
-			if (splittedLink.length > 4)
-				return new String[] { splittedLink[3], splittedLink[4] };
-		} else if (next != null) {
-			return next.parseLink(link);
-		}
-		return null;
+		return new GitHubContent(splittedLink[3], splittedLink[4]);
 	}
 };

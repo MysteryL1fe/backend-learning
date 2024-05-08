@@ -30,6 +30,14 @@ public class JdbcLinkChatService implements LinkChatService {
 		found.forEach(result::add);
 		return result;
 	}
+	
+	@Override
+	public Collection<LinkChat> findAllByLinkId(long linkId) {
+		Iterable<LinkChat> found = linkChatRepo.findAllByLinkId(linkId);
+		Collection<LinkChat> result = new ArrayList<>();
+		found.forEach(result::add);
+		return result;
+	}
 
 	@Override
 	public LinkChat remove(long linkId, long chatID) {

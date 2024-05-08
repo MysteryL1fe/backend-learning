@@ -1,5 +1,6 @@
 package ru.khanin.dmitrii.domain.jdbc;
 
+import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.Map;
 import java.util.Optional;
@@ -64,6 +65,15 @@ public class JdbcLinkRepository implements LinkRepository {
 	@Override
 	public Iterable<Link> findAll() {
 		return jdbcTemplate.query("SELECT * FROM link", rowMapper);
+	}
+	
+	@Override
+	public Iterable<Link> findAllWhereUpdateDateBeforeDate(OffsetDateTime dateTime) {
+		return jdbcTemplate.query(
+				"SELECT * FROM link WHERE update_date=NULL or update_date<:updateDate",
+				Map.of("updateDate", dateTime.withOffsetSameInstant(ZoneOffset.UTC).toLocalDateTime()),
+				rowMapper
+		);
 	}
 	
 	@Override

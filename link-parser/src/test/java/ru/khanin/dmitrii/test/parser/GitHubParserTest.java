@@ -1,7 +1,7 @@
 package ru.khanin.dmitrii.test.parser;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import ru.khanin.dmitrii.content.GitHubContent;
 import ru.khanin.dmitrii.parser.GitHubParser;
 import ru.khanin.dmitrii.parser.ParserHandler;
 
@@ -25,14 +26,15 @@ public class GitHubParserTest {
 	
 	@BeforeEach
 	void setUp() {
-		gitHubParser = new GitHubParser(nextParser);
+		gitHubParser = new GitHubParser();
+		gitHubParser.setNextParser(nextParser);
 	}
 	
 	@Test
 	void parseLinkNotLinkShouldReturnNull() {
 		String link = "123";
 		
-		Object result = gitHubParser.parseLink(link);
+		Object result = gitHubParser.parse(link);
 		
 		assertAll(
 				"Assert not link",
@@ -44,7 +46,7 @@ public class GitHubParserTest {
 	void parseLinkNotValidLinkWithSymbolsAfterSlashShouldReturnNull() {
 		String link = "http:/asd/asd";
 		
-		Object result = gitHubParser.parseLink(link);
+		Object result = gitHubParser.parse(link);
 		
 		assertAll(
 				"Assert not valid link with symbols after slash",
@@ -56,7 +58,7 @@ public class GitHubParserTest {
 	void parseLinkNotValidLinkWithoutProtocolShouldReturnNull() {
 		String link = "//123/456";
 		
-		Object result = gitHubParser.parseLink(link);
+		Object result = gitHubParser.parse(link);
 		
 		assertAll(
 				"Assert not valid link without protocol",
@@ -68,9 +70,9 @@ public class GitHubParserTest {
 	void parseLinkNotGitHubLinkShouldCallNextParser() {
 		String link = "http://abc";
 		String expectedResult = "456";
-		Mockito.when(nextParser.parseLink(Mockito.any())).thenReturn(expectedResult);
+		Mockito.when(nextParser.parse(Mockito.any())).thenReturn(expectedResult);
 		
-		Object result = gitHubParser.parseLink(link);
+		Object result = gitHubParser.parse(link);
 		
 		assertAll(
 				"Assert not github link with next parser",
@@ -81,32 +83,32 @@ public class GitHubParserTest {
 	}
 	
 	@Test
-	void parseLinkValidHttpLinkShouldReturnStrings() {
+	void parseLinkValidHttpLinkShouldReturnGitHubContent() {
 		String link = "http://github.com/123/456";
-		String[] expectedResult = new String[] {"123", "456"};
+		GitHubContent expectedResult = new GitHubContent("123", "456");
 		
-		Object result = gitHubParser.parseLink(link);
+		Object result = gitHubParser.parse(link);
 		
 		assertAll(
 				"Assert valid github http link",
 				() -> assertThat(result).isNotNull(),
-				() -> assertThat(result).isInstanceOf(String[].class),
-				() -> assertThat((String[]) result).isEqualTo(expectedResult)
+				() -> assertThat(result).isInstanceOf(GitHubContent.class),
+				() -> assertThat((GitHubContent) result).isEqualTo(expectedResult)
 		);
 	}
 	
 	@Test
 	void parseLinkValidHttpsLinkShouldReturnStrings() {
 		String link = "https://github.com/123/456";
-		String[] expectedResult = new String[] {"123", "456"};
+		GitHubContent expectedResult = new GitHubContent("123", "456");
 		
-		Object result = gitHubParser.parseLink(link);
+		Object result = gitHubParser.parse(link);
 		
 		assertAll(
 				"Assert valid github https link",
 				() -> assertThat(result).isNotNull(),
-				() -> assertThat(result).isInstanceOf(String[].class),
-				() -> assertThat((String[]) result).isEqualTo(expectedResult)
+				() -> assertThat(result).isInstanceOf(GitHubContent.class),
+				() -> assertThat((GitHubContent) result).isEqualTo(expectedResult)
 		);
 	}
 	
@@ -114,7 +116,7 @@ public class GitHubParserTest {
 	void parseLinkTooShortGitHubLinkShouldReturnNull() {
 		String link = "http://github.com";
 		
-		Object result = gitHubParser.parseLink(link);
+		Object result = gitHubParser.parse(link);
 		
 		assertAll(
 				"Assert too short github link",
@@ -124,10 +126,10 @@ public class GitHubParserTest {
 	
 	@Test
 	void parseLinkNotGitHubLinkShouldReturnNull() {
-		gitHubParser = new GitHubParser(null);
+		gitHubParser = new GitHubParser();
 		String link = "http://abc";
 		
-		Object result = gitHubParser.parseLink(link);
+		Object result = gitHubParser.parse(link);
 		
 		assertAll(
 				"Assert not github link without next parser",

@@ -1,6 +1,7 @@
 package ru.khanin.dmitrii.service.jdbc;
 
 import java.net.URI;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -43,6 +44,14 @@ public class JdbcLinkService implements LinkService {
 		Iterable<LinkChat> found = linkChatRepo.findAllByChatId(chatId);
 		Collection<Link> result = new ArrayList<>();
 		found.forEach((e) -> result.add(linkRepo.findById(e.getLinkId()).get()));
+		return result;
+	}
+	
+	@Override
+	public Collection<Link> findAllWhereUpdateDateBeforeDate(OffsetDateTime dateTime) {
+		Iterable<Link> found = linkRepo.findAllWhereUpdateDateBeforeDate(dateTime);
+		Collection<Link> result = new ArrayList<>();
+		found.forEach(result::add);
 		return result;
 	}
 
