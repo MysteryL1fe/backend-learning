@@ -1,12 +1,14 @@
 package ru.khanin.dmitrii.client;
 
 import java.net.URI;
+import java.time.OffsetDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import reactor.core.publisher.Mono;
-import ru.khanin.dmitrii.DTO.StackOverflow.ListAnswersResponse;
+import ru.khanin.dmitrii.DTO.StackOverflow.StackOverflowQuestionItem;
 
 @Service
 public class StackOverflowClient {
@@ -19,11 +21,18 @@ public class StackOverflowClient {
 				.build();
 	}
 	
-	public Mono<ListAnswersResponse> getAnswers(int id) {
-		return webClient
+	public List<StackOverflowQuestionItem> getQuestionItems(String questionId, OffsetDateTime updatedAt) {
+		record StackOverflowQuestionItems(StackOverflowQuestionItem[] items) {}
+		
+		StackOverflowQuestionItems items = webClient
 				.get()
-				.uri("2.3/questions/{id}/answers?order=desc&sort=activity&site=stackoverflow", id)
+				.uri("/2.3/questions/{id}/timeline?fromdate={date}&site=stackoverflow", questionId, updatedAt.toEpochSecond() * 1000)
 				.retrieve()
-				.bodyToMono(ListAnswersResponse.class);
+				.bodyToMono(StackOverflowQuestionItems.class)
+				.block();
+		
+		if (items == null) items = new StackOverflowQuestionItems(new StackOverflowQuestionItem[0]);
+		
+		return Arrays.asList(items.items);
 	}
 }

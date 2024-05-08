@@ -1,11 +1,13 @@
 package ru.khanin.dmitrii.client;
 
 import java.net.URI;
+import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.web.reactive.function.client.WebClient;
 
-import reactor.core.publisher.Mono;
-import ru.khanin.dmitrii.DTO.GitHub.RepositoryResponse;
+import ru.khanin.dmitrii.DTO.GitHub.GitHubRepositoryEvent;
 
 public class GitHubClient {
 	private final WebClient webClient;
@@ -17,11 +19,20 @@ public class GitHubClient {
 				.build();
 	}
 	
-	public Mono<RepositoryResponse> getRepository(String owner, String repo) {
-		return webClient
+	public List<GitHubRepositoryEvent> getRepositoryEvents(String owner, String repo, OffsetDateTime updatedAt) {
+		List<GitHubRepositoryEvent> events = webClient
 				.get()
-				.uri("repos/{owner}/{repo}", owner, repo)
+				.uri("repos/{owner}/{repo}/events", owner, repo)
 				.retrieve()
-				.bodyToMono(RepositoryResponse.class);
+				.bodyToFlux(GitHubRepositoryEvent.class)
+				.collectList()
+				.block();
+		
+		if (events == null) events = new ArrayList<>();
+		
+		return events
+				.stream()
+				.filter((e) -> e.created_at().isAfter(updatedAt))
+				.toList();
 	}
 }
