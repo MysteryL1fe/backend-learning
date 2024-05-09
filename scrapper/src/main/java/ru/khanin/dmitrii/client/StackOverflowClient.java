@@ -5,12 +5,10 @@ import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.List;
 
-import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import ru.khanin.dmitrii.DTO.StackOverflow.StackOverflowQuestionItem;
 
-@Service
 public class StackOverflowClient {
 	private final WebClient webClient;
 	

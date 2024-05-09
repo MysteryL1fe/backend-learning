@@ -8,6 +8,7 @@ import ru.khanin.dmitrii.DTO.entity.Link;
 
 public interface LinkService {
 	Link add(URI link);
+	Link updateUpdateDate(long linkId, OffsetDateTime updateDate);
 	Link findById(long linkId);
 	Link findByLink(URI link);
 	Collection<Link> findAllByChatId(long chatId);

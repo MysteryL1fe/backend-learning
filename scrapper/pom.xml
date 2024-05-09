@@ -159,5 +159,10 @@
 			<scope>runtime</scope>
 			<version>${postgresql.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>tinkoff-education-backend</groupId>
+			<artifactId>link-parser</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>

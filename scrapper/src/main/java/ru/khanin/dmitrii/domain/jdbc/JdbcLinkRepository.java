@@ -37,6 +37,21 @@ public class JdbcLinkRepository implements LinkRepository {
 	}
 	
 	@Override
+	public Optional<Link> updateUpdateDate(long linkId, OffsetDateTime updateDate) {
+		return Optional.ofNullable(DataAccessUtils.singleResult(
+				jdbcTemplate.query(
+						"UPDATE link SET update_date=:updateDate WHERE id=:id RETURNING *",
+						Map.of(
+								"id", linkId,
+								"updateDate", updateDate.withOffsetSameInstant(ZoneOffset.UTC).toLocalDateTime()
+						),
+						rowMapper
+				)
+			)
+		);
+	}
+	
+	@Override
 	public Optional<Link> findById(long id) {
 		return Optional.ofNullable(
 				DataAccessUtils.singleResult(

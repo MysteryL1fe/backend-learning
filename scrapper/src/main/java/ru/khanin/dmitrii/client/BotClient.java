@@ -1,6 +1,7 @@
 package ru.khanin.dmitrii.client;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -16,7 +17,7 @@ public class BotClient {
 				.build();
 	}
 	
-	public void linkUpdate(long id, URI url, String description, long[] tgChatIds) {
+	public void linkUpdate(long id, URI url, String description, List<Long> tgChatIds) {
 		LinkUpdateRequest req = new LinkUpdateRequest(id, url, description, tgChatIds);
 		webClient
 			.post()

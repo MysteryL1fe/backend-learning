@@ -30,6 +30,15 @@ public class JdbcLinkService implements LinkService {
 	}
 	
 	@Override
+	public Link updateUpdateDate(long linkId, OffsetDateTime updateDate) {
+		Link link = linkRepo.findById(linkId).orElse(null);
+		
+		if (link == null || link.getUpdateDate().isAfter(updateDate)) return null;
+		
+		return linkRepo.updateUpdateDate(linkId, updateDate).orElse(null);
+	}
+	
+	@Override
 	public Link findById(long linkId) {
 		return linkRepo.findById(linkId).orElse(null);
 	}
