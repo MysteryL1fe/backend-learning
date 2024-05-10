@@ -5,8 +5,10 @@ import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 
+import lombok.extern.slf4j.Slf4j;
 import ru.khanin.dmitrii.client.ScrapperClient;
 
+@Slf4j
 public class StartCommand extends Command {
 	@Autowired
 	ScrapperClient scrapperClient;

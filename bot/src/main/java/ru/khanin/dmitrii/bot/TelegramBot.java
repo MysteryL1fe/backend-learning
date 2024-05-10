@@ -1,31 +1,42 @@
 package ru.khanin.dmitrii.bot;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.net.URI;
+
+import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import ru.khanin.dmitrii.bot.commands.*;
+import lombok.extern.slf4j.Slf4j;
+import ru.khanin.dmitrii.bot.commands.HelpCommand;
+import ru.khanin.dmitrii.bot.commands.ListCommand;
+import ru.khanin.dmitrii.bot.commands.StartCommand;
+import ru.khanin.dmitrii.bot.commands.TrackCommand;
+import ru.khanin.dmitrii.bot.commands.UntrackCommand;
+import ru.khanin.dmitrii.client.ScrapperClient;
 
+@Component
+@Slf4j
 public class TelegramBot extends TelegramLongPollingCommandBot {
-	public static final Logger log = LoggerFactory.getLogger(Logger.class);
+	private final ScrapperClient scrapperClient;
 	private final String BOT_NAME;
 	
-	public TelegramBot(String botName, String botToken) {
+	public TelegramBot(String botName, String botToken, ScrapperClient scrapperClient) {
 		super(botToken);
-		BOT_NAME = botName;
+		
+		this.scrapperClient = scrapperClient;
+		this.BOT_NAME = botName;
+		
 		register(new StartCommand("start", "Зарегистрировать пользователя"));
 		register(new HelpCommand("help", "Вывести окно с командами"));
-		register(new TrackCommand("track", "Начать отслеживание ссылки"));
-		register(new UntrackCommand("untrack", "Прекратить отслеживание ссылки"));
-		register(new ListCommand("list", "Показать список отслеживаемых ссылок"));
+		register(new TrackCommand("track", "Начать отслеживание ссылки", this.scrapperClient));
+		register(new UntrackCommand("untrack", "Прекратить отслеживание ссылки", this.scrapperClient));
+		register(new ListCommand("list", "Показать список отслеживаемых ссылок", this.scrapperClient));
 	}
 
 	@Override
 	public void processNonCommandUpdate(Update update) {
-		// TODO Auto-generated method stub
 		log.info("processNonCommandUpdate");
 		SendMessage answer = new SendMessage();
 		answer.setText("Неизвестная команда");
@@ -39,7 +50,19 @@ public class TelegramBot extends TelegramLongPollingCommandBot {
 
 	@Override
 	public String getBotUsername() {
-		// TODO Auto-generated method stub
 		return BOT_NAME;
+	}
+	
+	public void linkUpdate(long id, URI url, String description, long[] tgChatIds) {
+		SendMessage message = new SendMessage();
+		message.setText("Updated " + url.toString() + ": " + description);
+		for (long tgChatId : tgChatIds) {
+			message.setChatId(tgChatId);
+			try {
+				execute(message);
+			} catch (TelegramApiException e) {
+				log.error(e.getMessage());
+			}
+		}
 	}
 }
