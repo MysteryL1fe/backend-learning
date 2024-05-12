@@ -10,10 +10,8 @@
 	<artifactId>scrapper-jooq</artifactId>
 	<properties>
 		<maven-compiler-plugin.version>3.12.1</maven-compiler-plugin.version>
-		<jooq-version>3.19.8</jooq-version>
-		<testcontainers.version>1.19.7</testcontainers.version>
+		<jooq-version>3.18.15</jooq-version>
 		<liquibase.version>4.27.0</liquibase.version>
-		<postgresql.version>42.7.3</postgresql.version>
 	</properties>
 	<build>
 		<plugins>

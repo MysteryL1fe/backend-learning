@@ -15,7 +15,15 @@ public class JooqCodegen {
 		Database database = new Database()
 				.withName("org.jooq.meta.extensions.liquibase.LiquibaseDatabase")
 				.withProperties(
-						new Property().withKey("rootPath").withValue("migrations"),
+						new Property().withKey("rootPath").withValue(
+								new File(".")
+								.toPath()
+								.toAbsolutePath()
+								.getParent()
+								.getParent()
+								.resolve("scrapper/src/main/resources/migrations")
+								.toString()
+						),
 						new Property().withKey("scripts").withValue("master.xml")
 				);
 		
@@ -38,7 +46,15 @@ public class JooqCodegen {
 		
 		Target target = new Target()
 				.withPackageName("ru.khanin.dmitrii.scrapper.domain.jooq")
-				.withDirectory("../scrapper/src/main/java");
+				.withDirectory(
+						new File(".")
+						.toPath()
+						.toAbsolutePath()
+						.getParent()
+						.getParent()
+						.resolve("scrapper/src/main/java")
+						.toString()
+				);
 		
 		Configuration configuration = new Configuration()
 				.withGenerator(
@@ -46,8 +62,7 @@ public class JooqCodegen {
 							.withDatabase(database)
 							.withGenerate(options)
 							.withTarget(target)
-				)
-				.withBasedir(new File(".").toPath().toAbsolutePath().getParent().toString());
+				);
 		
 		GenerationTool.generate(configuration);
 	}

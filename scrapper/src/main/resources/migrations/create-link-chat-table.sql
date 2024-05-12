@@ -1,4 +1,4 @@
-CREATE TABLE link_chat (
+CREATE TABLE IF NOT EXISTS link_chat (
 	link_id integer NOT NULL,
 	chat_id integer NOT NULL,
 	PRIMARY KEY (link_id, chat_id),

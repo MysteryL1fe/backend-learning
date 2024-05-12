@@ -18,6 +18,7 @@
 		<junit.version>5.10.2</junit.version>
 		<liquibase.version>4.27.0</liquibase.version>
 		<postgresql.version>42.7.3</postgresql.version>
+		<jooq-version>3.18.15</jooq-version>
 	</properties>
 	<build>
 		<plugins>
@@ -165,6 +166,16 @@
 			<groupId>tinkoff-education-backend</groupId>
 			<artifactId>link-parser</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jooq</groupId>
+			<artifactId>jooq-codegen</artifactId>
+			<version>${jooq-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jooq</groupId>
+			<artifactId>jooq-meta-extensions-liquibase</artifactId>
+			<version>${jooq-version}</version>
 		</dependency>
 	</dependencies>
 </project>
