@@ -16,6 +16,8 @@
 		<springdoc.version>2.3.0</springdoc.version>
 		<slf4j.version>2.0.12</slf4j.version>
 		<junit.version>5.10.2</junit.version>
+		<liquibase.version>4.27.0</liquibase.version>
+		<postgresql.version>42.7.3</postgresql.version>
 	</properties>
 	<build>
 		<plugins>
@@ -152,7 +154,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 			<version>${spring-boot.version}</version>
-			</dependency>
+		</dependency>
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
