@@ -16,6 +16,9 @@
 		<springdoc.version>2.3.0</springdoc.version>
 		<slf4j.version>2.0.12</slf4j.version>
 		<junit.version>5.10.2</junit.version>
+		<liquibase.version>4.27.0</liquibase.version>
+		<postgresql.version>42.7.3</postgresql.version>
+		<jooq-version>3.18.15</jooq-version>
 	</properties>
 	<build>
 		<plugins>
@@ -126,6 +129,53 @@
 			<artifactId>junit-jupiter-api</artifactId>
 			<version>${junit.version}</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>${junit.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+			<scope>test</scope>
+			<version>${liquibase.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+			<version>${spring-boot.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+			<version>${postgresql.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>tinkoff-education-backend</groupId>
+			<artifactId>link-parser</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jooq</groupId>
+			<artifactId>jooq-codegen</artifactId>
+			<version>${jooq-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jooq</groupId>
+			<artifactId>jooq-meta-extensions-liquibase</artifactId>
+			<version>${jooq-version}</version>
 		</dependency>
 	</dependencies>
 </project>
