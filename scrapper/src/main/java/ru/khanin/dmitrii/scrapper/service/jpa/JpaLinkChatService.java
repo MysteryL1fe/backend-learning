@@ -1,16 +1,16 @@
-package ru.khanin.dmitrii.scrapper.service.jdbc;
+package ru.khanin.dmitrii.scrapper.service.jpa;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 import lombok.RequiredArgsConstructor;
 import ru.khanin.dmitrii.scrapper.DTO.entity.LinkChat;
-import ru.khanin.dmitrii.scrapper.domain.jdbc.JdbcLinkChatRepository;
+import ru.khanin.dmitrii.scrapper.domain.jpa.JpaLinkChatRepository;
 import ru.khanin.dmitrii.scrapper.service.LinkChatService;
 
 @RequiredArgsConstructor
-public class JdbcLinkChatService implements LinkChatService {
-	private final JdbcLinkChatRepository linkChatRepo;
+public class JpaLinkChatService implements LinkChatService {
+	private final JpaLinkChatRepository linkChatRepo;
 
 	@Override
 	public LinkChat add(long linkId, long chatId) {
@@ -22,7 +22,7 @@ public class JdbcLinkChatService implements LinkChatService {
 	
 	@Override
 	public Collection<LinkChat> findAllByChatId(long chatId) {
-		Iterable<LinkChat> found = linkChatRepo.findAllByChatId(chatId);
+		Iterable<? extends LinkChat> found = linkChatRepo.findAllByChatId(chatId);
 		Collection<LinkChat> result = new ArrayList<>();
 		found.forEach(result::add);
 		return result;
@@ -30,7 +30,7 @@ public class JdbcLinkChatService implements LinkChatService {
 	
 	@Override
 	public Collection<LinkChat> findAllByLinkId(long linkId) {
-		Iterable<LinkChat> found = linkChatRepo.findAllByLinkId(linkId);
+		Iterable<? extends LinkChat> found = linkChatRepo.findAllByLinkId(linkId);
 		Collection<LinkChat> result = new ArrayList<>();
 		found.forEach(result::add);
 		return result;
@@ -46,7 +46,7 @@ public class JdbcLinkChatService implements LinkChatService {
 	
 	@Override
 	public Collection<LinkChat> removeAllLinks(long chatId) {
-		Iterable<LinkChat> removed = linkChatRepo.removeAllLinks(chatId);
+		Iterable<? extends LinkChat> removed = linkChatRepo.removeAllLinks(chatId);
 		Collection<LinkChat> result = new ArrayList<>();
 		removed.forEach(result::add);
 		return result;

@@ -1,16 +1,16 @@
-package ru.khanin.dmitrii.scrapper.service.jdbc;
+package ru.khanin.dmitrii.scrapper.service.jpa;
 
 import lombok.RequiredArgsConstructor;
 import ru.khanin.dmitrii.scrapper.DTO.entity.Chat;
-import ru.khanin.dmitrii.scrapper.domain.jdbc.JdbcChatRepository;
-import ru.khanin.dmitrii.scrapper.domain.jdbc.JdbcLinkChatRepository;
+import ru.khanin.dmitrii.scrapper.domain.jpa.JpaChatRepository;
+import ru.khanin.dmitrii.scrapper.domain.jpa.JpaLinkChatRepository;
 import ru.khanin.dmitrii.scrapper.service.ChatService;
 
 @RequiredArgsConstructor
-public class JdbcChatService implements ChatService {
-	private final JdbcChatRepository chatRepo;
-	private final JdbcLinkChatRepository linkChatRepo;
-
+public class JpaChatService implements ChatService {
+	private final JpaChatRepository chatRepo;
+	private final JpaLinkChatRepository linkChatRepo;
+	
 	@Override
 	public Chat register(long chatId) {
 		Chat chat = new Chat();

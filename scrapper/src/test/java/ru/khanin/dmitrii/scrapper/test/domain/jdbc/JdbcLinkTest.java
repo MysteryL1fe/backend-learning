@@ -1,4 +1,4 @@
-package ru.khanin.dmitrii.test.scrapper.domain.jdbc;
+package ru.khanin.dmitrii.scrapper.test.domain.jdbc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ru.khanin.dmitrii.scrapper.DTO.entity.Link;
 import ru.khanin.dmitrii.scrapper.domain.jdbc.JdbcLinkRepository;
-import ru.khanin.dmitrii.test.scrapper.IntegrationEnvironment;
+import ru.khanin.dmitrii.scrapper.test.IntegrationEnvironment;
 
 public class JdbcLinkTest extends IntegrationEnvironment {
 	@Autowired

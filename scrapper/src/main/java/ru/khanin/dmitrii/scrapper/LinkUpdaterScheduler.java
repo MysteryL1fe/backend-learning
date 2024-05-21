@@ -27,6 +27,9 @@ import ru.khanin.dmitrii.scrapper.client.StackOverflowClient;
 import ru.khanin.dmitrii.scrapper.service.ChatService;
 import ru.khanin.dmitrii.scrapper.service.LinkChatService;
 import ru.khanin.dmitrii.scrapper.service.LinkService;
+import ru.khanin.dmitrii.scrapper.service.jpa.JpaChatService;
+import ru.khanin.dmitrii.scrapper.service.jpa.JpaLinkChatService;
+import ru.khanin.dmitrii.scrapper.service.jpa.JpaLinkService;
 
 @Service
 @Slf4j

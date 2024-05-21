@@ -1,10 +1,10 @@
-package ru.khanin.dmitrii.test.scrapper;
+package ru.khanin.dmitrii.scrapper.test;
 
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
 @SpringBootTest
 @ContextConfiguration(initializers = {TestcontainersContextInitializer.class})
-public class IntegrationEnvironment {
+public abstract class IntegrationEnvironment {
 	
 }

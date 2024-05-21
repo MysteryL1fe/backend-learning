@@ -1,10 +1,12 @@
 package ru.khanin.dmitrii.scrapper.DTO.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(of = "id", callSuper = false)
 public class Chat {
-	private long id;
-	private long chatId;
-	private String username;
+	protected long id;
+	protected long chatId;
+	protected String username;
 }

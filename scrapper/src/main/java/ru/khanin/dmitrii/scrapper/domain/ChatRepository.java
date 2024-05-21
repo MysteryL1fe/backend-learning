@@ -8,6 +8,6 @@ public interface ChatRepository {
 	Chat add(Chat chat);
 	Optional<Chat> findById(long id);
 	Optional<Chat> findByChatId(long chatId);
-	Iterable<Chat> findAll();
+	Iterable<? extends Chat> findAll();
 	Optional<Chat> remove(long chatId);
 }

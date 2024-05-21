@@ -83,7 +83,7 @@ public class JdbcLinkRepository implements LinkRepository {
 	}
 	
 	@Override
-	public Iterable<Link> findAllWhereUpdateDateBeforeDate(OffsetDateTime dateTime) {
+	public Iterable<Link> findAllByUpdateDateBefore(OffsetDateTime dateTime) {
 		return jdbcTemplate.query(
 				"SELECT * FROM link WHERE update_date=NULL or update_date<:updateDate",
 				Map.of("updateDate", dateTime.withOffsetSameInstant(ZoneOffset.UTC).toLocalDateTime()),
