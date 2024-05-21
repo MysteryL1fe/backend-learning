@@ -3,17 +3,14 @@ package ru.khanin.dmitrii.scrapper.service.jdbc;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import lombok.RequiredArgsConstructor;
 import ru.khanin.dmitrii.scrapper.DTO.entity.LinkChat;
 import ru.khanin.dmitrii.scrapper.domain.jdbc.JdbcLinkChatRepository;
 import ru.khanin.dmitrii.scrapper.service.LinkChatService;
 
-@Service
+@RequiredArgsConstructor
 public class JdbcLinkChatService implements LinkChatService {
-	@Autowired
-	private JdbcLinkChatRepository linkChatRepo;
+	private final JdbcLinkChatRepository linkChatRepo;
 
 	@Override
 	public LinkChat add(long linkId, long chatId) {

@@ -5,22 +5,17 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import lombok.RequiredArgsConstructor;
 import ru.khanin.dmitrii.scrapper.DTO.entity.Link;
 import ru.khanin.dmitrii.scrapper.DTO.entity.LinkChat;
 import ru.khanin.dmitrii.scrapper.domain.jdbc.JdbcLinkChatRepository;
 import ru.khanin.dmitrii.scrapper.domain.jdbc.JdbcLinkRepository;
 import ru.khanin.dmitrii.scrapper.service.LinkService;
 
-@Service
+@RequiredArgsConstructor
 public class JdbcLinkService implements LinkService {
-	@Autowired
-	private JdbcLinkRepository linkRepo;
-	
-	@Autowired
-	private JdbcLinkChatRepository linkChatRepo;
+	private final JdbcLinkRepository linkRepo;
+	private final JdbcLinkChatRepository linkChatRepo;
 	
 	@Override
 	public Link add(URI link) {

@@ -42,7 +42,7 @@ public class LinkUpdaterScheduler {
 	private final StackOverflowClient stackOverflowClient = new StackOverflowClient(new URI("https://api.stackexchange.com/2.3"));
 	private final BotClient botClient = new BotClient(new URI("http://localhost:8080"));
 	
-	public LinkUpdaterScheduler(JpaLinkService linkService, JpaLinkChatService linkChatService, JpaChatService chatService) throws URISyntaxException {
+	public LinkUpdaterScheduler(LinkService linkService, LinkChatService linkChatService, ChatService chatService) throws URISyntaxException {
 		this.linkService = linkService;
 		this.linkChatService = linkChatService;
 		this.chatService = chatService;

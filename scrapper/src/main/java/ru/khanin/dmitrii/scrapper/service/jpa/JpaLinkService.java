@@ -5,22 +5,17 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import lombok.RequiredArgsConstructor;
 import ru.khanin.dmitrii.scrapper.DTO.entity.Link;
 import ru.khanin.dmitrii.scrapper.DTO.entity.LinkChat;
 import ru.khanin.dmitrii.scrapper.domain.jpa.JpaLinkChatRepository;
 import ru.khanin.dmitrii.scrapper.domain.jpa.JpaLinkRepository;
 import ru.khanin.dmitrii.scrapper.service.LinkService;
 
-@Service
+@RequiredArgsConstructor
 public class JpaLinkService implements LinkService {
-	@Autowired
-	private JpaLinkRepository linkRepo;
-	
-	@Autowired
-	private JpaLinkChatRepository linkChatRepo;
+	private final JpaLinkRepository linkRepo;
+	private final JpaLinkChatRepository linkChatRepo;
 	
 	@Override
 	public Link add(URI link) {
@@ -50,7 +45,7 @@ public class JpaLinkService implements LinkService {
 	
 	@Override
 	public Collection<Link> findAllByChatId(long chatId) {
-		Iterable<LinkChat> found = (Iterable<LinkChat>) linkChatRepo.findAllByChatId(chatId);
+		Iterable<? extends LinkChat> found = linkChatRepo.findAllByChatId(chatId);
 		Collection<Link> result = new ArrayList<>();
 		found.forEach((e) -> result.add(linkRepo.findById(e.getLinkId()).get()));
 		return result;
@@ -58,7 +53,7 @@ public class JpaLinkService implements LinkService {
 	
 	@Override
 	public Collection<Link> findAllWhereUpdateDateBeforeDate(OffsetDateTime dateTime) {
-		Iterable<Link> found = (Iterable<Link>) linkRepo.findAllByUpdateDateBefore(dateTime);
+		Iterable<? extends Link> found = linkRepo.findAllByUpdateDateBefore(dateTime);
 		Collection<Link> result = new ArrayList<>();
 		found.forEach(result::add);
 		return result;

@@ -1,14 +1,11 @@
 package ru.khanin.dmitrii.scrapper.service.jdbc;
 
-import org.springframework.stereotype.Service;
-
 import lombok.RequiredArgsConstructor;
 import ru.khanin.dmitrii.scrapper.DTO.entity.Chat;
 import ru.khanin.dmitrii.scrapper.domain.jdbc.JdbcChatRepository;
 import ru.khanin.dmitrii.scrapper.domain.jdbc.JdbcLinkChatRepository;
 import ru.khanin.dmitrii.scrapper.service.ChatService;
 
-@Service
 @RequiredArgsConstructor
 public class JdbcChatService implements ChatService {
 	private final JdbcChatRepository chatRepo;
