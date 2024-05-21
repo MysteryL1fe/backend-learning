@@ -10,7 +10,7 @@
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
         http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
 
-    <include file="create-chat-table.sql"/>
-    <include file="create-link-table.sql"/>
-    <include file="create-link-chat-table.sql"/>
+    <include file="migrations/create-chat-table.sql"/>
+    <include file="migrations/create-link-table.sql"/>
+    <include file="migrations/create-link-chat-table.sql"/>
 </databaseChangeLog>

@@ -27,6 +27,9 @@ import ru.khanin.dmitrii.scrapper.client.StackOverflowClient;
 import ru.khanin.dmitrii.scrapper.service.ChatService;
 import ru.khanin.dmitrii.scrapper.service.LinkChatService;
 import ru.khanin.dmitrii.scrapper.service.LinkService;
+import ru.khanin.dmitrii.scrapper.service.jpa.JpaChatService;
+import ru.khanin.dmitrii.scrapper.service.jpa.JpaLinkChatService;
+import ru.khanin.dmitrii.scrapper.service.jpa.JpaLinkService;
 
 @Service
 @Slf4j
@@ -39,7 +42,7 @@ public class LinkUpdaterScheduler {
 	private final StackOverflowClient stackOverflowClient = new StackOverflowClient(new URI("https://api.stackexchange.com/2.3"));
 	private final BotClient botClient = new BotClient(new URI("http://localhost:8080"));
 	
-	public LinkUpdaterScheduler(LinkService linkService, LinkChatService linkChatService, ChatService chatService) throws URISyntaxException {
+	public LinkUpdaterScheduler(JpaLinkService linkService, JpaLinkChatService linkChatService, JpaChatService chatService) throws URISyntaxException {
 		this.linkService = linkService;
 		this.linkChatService = linkChatService;
 		this.chatService = chatService;

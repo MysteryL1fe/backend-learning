@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class LinkChat {
-	private long linkId;
-	private long chatId;
+	protected long linkId;
+	protected long chatId;
 }

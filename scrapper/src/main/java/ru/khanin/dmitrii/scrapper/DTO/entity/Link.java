@@ -4,11 +4,13 @@ import java.time.OffsetDateTime;
 
 import jakarta.annotation.Nullable;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(of = "id", callSuper = false)
 public class Link {
-	private Long id;
-	private String link;
+	protected long id;
+	protected String link;
 	@Nullable
-	private OffsetDateTime updateDate;
+	protected OffsetDateTime updateDate;
 }

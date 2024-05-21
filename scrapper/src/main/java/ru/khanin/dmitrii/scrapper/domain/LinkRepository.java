@@ -10,7 +10,7 @@ public interface LinkRepository {
 	Optional<Link> updateUpdateDate(long linkId, OffsetDateTime updateDate);
 	Optional<Link> findById(long id);
 	Optional<Link> findByLink(String link);
-	Iterable<Link> findAll();
-	Iterable<Link> findAllWhereUpdateDateBeforeDate(OffsetDateTime dateTime);
+	Iterable<? extends Link> findAll();
+	Iterable<? extends Link> findAllByUpdateDateBefore(OffsetDateTime dateTime);
 	Optional<Link> remove(String link);
 }

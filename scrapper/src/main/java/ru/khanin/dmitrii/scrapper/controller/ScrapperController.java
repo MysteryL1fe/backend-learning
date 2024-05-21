@@ -22,16 +22,16 @@ import ru.khanin.dmitrii.scrapper.DTO.ListLinksResponse;
 import ru.khanin.dmitrii.scrapper.DTO.RemoveLinkRequest;
 import ru.khanin.dmitrii.scrapper.DTO.entity.Chat;
 import ru.khanin.dmitrii.scrapper.DTO.entity.Link;
-import ru.khanin.dmitrii.scrapper.service.ChatService;
-import ru.khanin.dmitrii.scrapper.service.LinkChatService;
-import ru.khanin.dmitrii.scrapper.service.LinkService;
+import ru.khanin.dmitrii.scrapper.service.jpa.JpaChatService;
+import ru.khanin.dmitrii.scrapper.service.jpa.JpaLinkChatService;
+import ru.khanin.dmitrii.scrapper.service.jpa.JpaLinkService;
 
 @RestController
 @RequiredArgsConstructor
 public class ScrapperController {
-	private final ChatService chatService;
-	private final LinkService linkService;
-	private final LinkChatService linkChatService;
+	private final JpaChatService chatService;
+	private final JpaLinkService linkService;
+	private final JpaLinkChatService linkChatService;
 	
 	@PostMapping("/tg-chat/{id}")
 	public ResponseEntity<?> registerChat(@PathVariable long id) {
