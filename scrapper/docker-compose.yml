@@ -6,7 +6,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgresql:/var/lib/postgresql
     ports:
       - "5432:5432"
     networks:
@@ -27,9 +27,17 @@ services:
       - ./src/main/resources/migrations:/liquibase/changelog
     networks:
       - backend
+  rabbitmq:
+    image: rabbitmq:3-management
+    volumes:
+      - rabbitmq:/var/lib/rabbitmq
+    ports:
+      - "15672:15672"
+      - "5762:5762"
 
 networks:
   backend:
 
 volumes:
-  postgres_data:
+  postgresql:
+  rabbitmq:
